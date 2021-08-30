@@ -10,4 +10,9 @@ app.use(routes)
 
 app.use(errorMiddleware)
 
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
+
 module.exports = app

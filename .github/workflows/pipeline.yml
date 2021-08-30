@@ -28,3 +28,14 @@ jobs:
           command: npm run test:e2e
           start: npm run start
           wait-on: http://localhost:8000
+      - name: deploy
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "afternoon-retreat-98906"
+          heroku_email: "veikko.hiltun@gmail.com"
+          healthcheck: "https://afternoon-retreat-98906.herokuapp.com/health"
+          checkstring: "ok"
+          delay: 5
+          rollbackonhealthcheckfailed: true
